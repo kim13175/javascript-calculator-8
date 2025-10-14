@@ -1,4 +1,3 @@
-import { Console } from "@woowacourse/mission-utils"
 import CalcModel from "./CalcModel.js"
 import CalcView from "./CalcView.js"
 import { CALC_PATTERN } from "./Constant.js"
@@ -23,17 +22,16 @@ class Controller {
 
             const input = await this.view.start()
 
+            const model = this.model
             if (this.hasCustomDelimeter(input)) {
-                delimeter = model.extractDelimiter(input)
+                model.extractDelimiter(input)
             }
 
-            const model = this.model
-            model.parse(input)
             const numberArray = model.parse(input)
             this.view.display(model.calculate(numberArray)) 
 
         } catch(error) {
-            Console.print(error)
+            console.log(error)
             throw new Error("[ERROR] 계산에 실패하였습니다.")
         }
     }

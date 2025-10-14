@@ -1,4 +1,4 @@
-import { CALC_PATTERN } from "./Constant.js";
+import { ALL_REG_EXP, CALC_PATTERN } from "./Constant.js";
 
 class CalcModel {
     constructor() {
@@ -14,20 +14,22 @@ class CalcModel {
     }
 
     extractExtraString(input) {
-        const match = input.match(CALC_PATTERN);
-        if (match) return match[1]
-        else return input
+        if (input.startsWith('//') && input.includes('\\n')) {
+            return input.split('\\n')[1]
+        }
+        return input
     }
 
     splitExtraString(input) {
         const escapedDelimiters = this.delimiters.map(d => 
-            d.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-        );
-        const pattern = new RegExp(escapedDelimiters.join('|'));  
-        return input.split(pattern);
+            d.replace(ALL_REG_EXP, '\\$&')
+        )
+        const pattern = new RegExp(escapedDelimiters.join('|'))  
+        return input.split(pattern)
     }
 
     parse(input) {
+        this.extractDelimiter(input)
         const extraString = this.extractExtraString(input)
         const numbers = this.splitExtraString(extraString)
         return numbers.map((number) => parseInt(number))
