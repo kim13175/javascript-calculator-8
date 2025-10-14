@@ -1,13 +1,10 @@
-import CalcView from "./CalcView.js"
+import Controller from "./Controller.js";
 
 class App {
   async run() {
-    const view = new CalcView()
-    let string = ''
-    string = await view.start(string)
-    if (string !== '' && string !== undefined) {
-      view.display(string)
-    }
+    const controller = new Controller()
+    
+    controller.run()
   }
 }
 

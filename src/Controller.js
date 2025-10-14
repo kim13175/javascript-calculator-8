@@ -1,5 +1,7 @@
+import { Console } from "@woowacourse/mission-utils"
+import CalcModel from "./CalcModel.js"
 import CalcView from "./CalcView.js"
-import Validator from "./Validator.js"
+import { CALC_PATTERN } from "./Constant.js"
 
 class Controller {
     constructor() {
@@ -18,12 +20,20 @@ class Controller {
 
     async run() {
         try {
-            const validate = new Validator()
 
             const input = await this.view.start()
 
-            validate.hasCustomDelimeter(input)
-        } catch {
+            if (this.hasCustomDelimeter(input)) {
+                delimeter = model.extractDelimiter(input)
+            }
+
+            const model = this.model
+            model.parse(input)
+            const numberArray = model.parse(input)
+            this.view.display(model.calculate(numberArray)) 
+
+        } catch(error) {
+            Console.print(error)
             throw new Error("[ERROR] 계산에 실패하였습니다.")
         }
     }
