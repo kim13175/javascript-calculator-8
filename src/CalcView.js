@@ -1,6 +1,6 @@
 import { Console } from "@woowacourse/mission-utils"
 
-class consoleView {
+class CalcView {
     start() {
         return Console.readLineAsync("덧셈할 문자열을 입력해 주세요.\n")
     }
@@ -10,4 +10,4 @@ class consoleView {
     }
 }
 
-export default consoleView
+export default CalcView

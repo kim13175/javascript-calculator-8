@@ -1,8 +1,8 @@
-import consoleView from "./views/consoleView.js";
+import CalcView from "./CalcView.js"
 
 class App {
   async run() {
-    const view = new consoleView()
+    const view = new CalcView()
     let string = ''
     string = await view.start(string)
     if (string !== '' && string !== undefined) {

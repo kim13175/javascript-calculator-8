@@ -1,0 +1,1 @@
+export const CALC_PATTERN = /^\/\/.{1}\n/
