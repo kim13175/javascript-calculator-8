@@ -7,7 +7,7 @@ class CalcModel {
     
     extractDelimiter(input) {
         const match = input.match(CALC_PATTERN)
-        if (match) {
+        if (match && !this.delimiters.includes(match[1])) {
             this.delimiters.push(match[1])
         }
         return this.delimiters

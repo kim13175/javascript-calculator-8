@@ -4,7 +4,7 @@ class App {
   async run() {
     const controller = new Controller()
     
-    controller.run()
+    await controller.run()
   }
 }
 
