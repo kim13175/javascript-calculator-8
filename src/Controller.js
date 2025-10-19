@@ -13,6 +13,10 @@ class Controller {
         return pattern.test(input)
     }
 
+    validateEndString(input) {
+        if (CHAR_PATTERN.test(input[input.length - 1])) throw new Error("[ERROR] 마지막 문자는 문자열일 수 없습니다.")
+    }
+
     validateDelimeter(delimiters, input) {
         for (const ch of input) {
             if (CHAR_PATTERN.test(ch)) {
@@ -27,14 +31,11 @@ class Controller {
         }
     }
 
-    validateEndString(input) {
-        if (parseInt(input[input.length]) !== typeof Number) throw new Error("[ERROR] 맨 끝은 숫자가 와야 합니다.")
-    }
-
     async run() {
         try {
 
             const input = await this.view.start()
+            this.validateEndString(input)
 
             const model = this.model
             if (this.hasCustomDelimeter(input)) {
