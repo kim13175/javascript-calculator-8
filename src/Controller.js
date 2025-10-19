@@ -1,6 +1,6 @@
 import CalcModel from "./CalcModel.js"
 import CalcView from "./CalcView.js"
-import { CALC_PATTERN } from "./Constant.js"
+import { CALC_PATTERN, CHAR_PATTERN } from "./Constant.js"
 
 class Controller {
     constructor() {
@@ -13,14 +13,12 @@ class Controller {
         return pattern.test(input)
     }
 
-    validateDelimeter(customCh, input) {
-        let isDifferent = false
+    validateDelimeter(delimiters, input) {
         for (const ch of input) {
-            if (customCh !== ch) {
-                isDifferent = true
+            if (CHAR_PATTERN.test(ch)) {
+                if (!delimiters.includes(ch)) throw new Error("[ERROR] 커스텀 문자와 일치하지 않는 문자열입니다.")
             }
         }
-        if (isDifferent === true) throw new Error("[ERROR] 커스텀 문자와 일치하지 않는 문자열입니다.")
     }
 
     validateNegative(numberArray) {
@@ -43,8 +41,9 @@ class Controller {
                 model.extractDelimiter(input)
             }
 
-            const customCh = this.model.delimiters[this.model.delimiters.length]
-            this.validateDelimeter(customCh, input)
+            const extraInput = this.model.extractExtraString(input)
+            const delimiters = [...model.delimiters] 
+            this.validateDelimeter(delimiters, extraInput)
 
             const numberArray = model.parse(input)
             this.validateNegative(numberArray)
