@@ -8,6 +8,10 @@ class Controller {
         this.model = new CalcModel()
     }
 
+    checkEmptyString(input) {
+        if (input.length === 0) return 0
+    }
+
     hasCustomDelimeter(input) {
         const pattern = CALC_PATTERN
         return pattern.test(input)
@@ -35,6 +39,7 @@ class Controller {
         try {
 
             const input = await this.view.start()
+            this.checkEmptyString(input)
             this.validateEndString(input)
 
             const model = this.model
